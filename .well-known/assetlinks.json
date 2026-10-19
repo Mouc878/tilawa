@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.tilawa.quran",
+    "sha256_cert_fingerprints": ["51:72:00:AA:3A:2E:0B:C5:61:61:F6:06:5B:B0:1C:40:EE:CE:6D:FE:A9:60:16:4F:6B:A3:E3:93:00:8A:74:8F"]
+  }
+}]
