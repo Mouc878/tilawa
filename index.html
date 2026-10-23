@@ -10,10 +10,10 @@
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-<meta name="apple-mobile-web-app-title" content="Tilāwa" />
-<meta name="description" content="Tilāwa — lisez le Coran complet en arabe avec traduction française, mémorisez-le pas à pas et écoutez 14 récitateurs, même hors connexion." />
+<meta name="apple-mobile-web-app-title" content="Al-Furqan" />
+<meta name="description" content="Al-Furqan — lisez le Coran complet en arabe avec traduction française, mémorisez-le pas à pas et écoutez 23 récitateurs, même hors connexion." />
 <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
-<title>Tilāwa — Coran : Lire, Mémoriser, Écouter</title>
+<title>Al-Furqan — Coran : Lire, Mémoriser, Écouter</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -150,8 +150,24 @@ select.sel{border:1px solid var(--line);background:var(--card);color:var(--ink);
 .reader-head .meta{font-size:12px;color:var(--ink3);letter-spacing:.12em;text-transform:uppercase;font-weight:700;margin-top:4px}
 .basmala{font-family:"Amiri",serif;font-size:27px;text-align:center;direction:rtl;color:var(--ink);padding:10px 0 4px;line-height:2}
 .reader-tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:14px 0 4px}
-.verse{padding:22px 4px 18px;border-bottom:1px solid var(--line2)}
+.verse{padding:22px 4px 18px;border-bottom:1px solid var(--line2);transition:background .35s ease}
 .verse.playing{background:linear-gradient(to left,var(--gold-soft),transparent 65%)}
+.verse.playing .v-ar .medal{background:var(--gold);color:#fff;border-color:var(--gold)}
+/* ---------- Mode Mushaf — le texte seul, comme le Coran imprimé ---------- */
+.mushaf{border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow);padding:36px 30px 30px;margin-top:12px}
+.mushaf-txt{font-family:"Amiri",serif;direction:rtl;text-align:justify;text-align-last:center;font-size:calc(var(--arsize,29px)*1.1);line-height:2.55;color:var(--ink);margin:0}
+.mushaf-txt .mv-end{display:inline-grid;place-items:center;min-width:1.55em;height:1.55em;border:1px solid var(--gold);border-radius:50%;font-size:.48em;color:var(--gold);vertical-align:middle;padding:0 .25em;margin:0 .12em;background:var(--paper2);font-family:"Amiri",serif}
+.mushaf-note{text-align:center;font-size:12.5px;color:var(--ink3);margin-top:14px}
+/* ---------- Mémo : la carte du verset suit la récitation ---------- */
+.memo-stage.playing{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft),var(--shadow)}
+/* ---------- Photos des récitateurs (repli : les initiales dessous) ---------- */
+.fp-avatar{position:relative;overflow:hidden}
+.fp-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.avatar-sm{position:relative;overflow:hidden}
+.avatar-sm img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* ---------- Signature ---------- */
+.side-sign{margin-top:12px;font-size:11.5px;color:var(--ink3);letter-spacing:.04em}
+.side-sign b{color:var(--gold);font-weight:800}
 .verse .v-ar{font-family:"Amiri",serif;direction:rtl;text-align:right;font-size:var(--arsize,29px);line-height:2.15;color:var(--ink)}
 .verse .v-ar .medal{display:inline-grid;place-items:center;width:1.55em;height:1.55em;border:1px solid var(--gold);border-radius:50%;font-size:.52em;color:var(--gold);vertical-align:middle;margin:0 .35em;background:var(--card);font-family:"Amiri",serif}
 .verse .v-fr{font-family:"Plus Jakarta Sans",sans-serif;font-size:var(--frsize,18.5px);color:var(--ink2);margin-top:10px;line-height:1.5;max-width:64ch}
@@ -584,18 +600,19 @@ h2.sec{font-weight:800}
 <body>
 <div class="net-banner" id="netBanner" role="status">Vous êtes <b>hors ligne</b> — la lecture et la mémorisation restent disponibles, l'écoute reprendra avec la connexion.</div>
 <header class="mobile-top">
-  <div><div class="mt-name">Til<em>ā</em>wa</div><div class="mt-sub">Lire · Mémoriser · Écouter</div></div>
+  <div><div class="mt-name">Al-Fur<em>qan</em></div><div class="mt-sub">Lire · Mémoriser · Écouter</div></div>
   <button class="themebtn-m" id="themeBtnM" aria-label="Basculer le mode nuit"></button>
 </header>
 <div class="app">
   <aside class="sidebar">
     <div class="wordmark">
-      <div class="name">Til<em>ā</em>wa</div>
+      <div class="name">Al-Fur<em>qan</em></div>
       <div class="sub">Lire · Mémoriser · Écouter</div>
     </div>
     <nav class="nav" id="sideNav"></nav>
     <div class="side-foot">
       <button class="themebtn" id="themeBtn" aria-label="Basculer le mode nuit"></button>
+      <div class="side-sign">Conçu par <b>Mouctar Bah</b></div>
       <div class="streak-mini">
         <div class="n" id="streakMini">0</div>
         <div class="t">jours de suite<br>dans le Coran</div>
@@ -606,9 +623,7 @@ h2.sec{font-weight:800}
   <main class="main">
     <!-- ACCUEIL -->
     <section class="view" id="view-home">
-      <div class="kicker">Le Livre, chaque jour</div>
       <h1 class="page">Reprenez là où la lumière<br>vous a laissé.</h1>
-      <p class="lede">Une édition de poche pour lire le Coran en arabe avec sa traduction française, l'apprendre verset par verset, et l'écouter récité lentement — à votre rythme.</p>
 
       <div class="continue-card">
         <div class="cc-top"><span class="cc-kicker">Reprendre où vous vous êtes arrêté</span><span class="cc-ar" id="ccArName">الفاتحة</span></div>
@@ -632,7 +647,6 @@ h2.sec{font-weight:800}
       <div class="duo">
         <div class="panel">
           <h3>Reprendre la lecture</h3>
-          <p id="resumeText">Votre dernier passage vous attend.</p>
           <div class="resume-line">
             <div class="medal" id="resumeMedal">١</div>
             <div>
@@ -647,7 +661,6 @@ h2.sec{font-weight:800}
         </div>
         <div class="panel">
           <h3>Le verset du Trône</h3>
-          <p>Āyat al-Kursī (2 : 255) — le plus grand verset du Coran, à lire matin et soir.</p>
           <div class="ar" style="font-size:19px;line-height:2;text-align:right">ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ ۚ لَا تَأْخُذُهُۥ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُۥ مَا فِى ٱلسَّمَٰوَٰتِ وَمَا فِى ٱلْأَرْضِ…</div>
           <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
             <button class="btn sm gold" id="kursiListen">Écouter le verset</button>
@@ -661,7 +674,6 @@ h2.sec{font-weight:800}
 
       <div id="homeProgress">
       <div class="sec-head" style="margin-top:40px"><h2 class="sec">Votre progression, jour après jour</h2></div>
-      <p class="lede">Votre fréquentation du Coran, en un coup d'œil : série en cours, calendrier d'activité et temps consacré à la lecture, à l'écoute et à la mémorisation.</p>
       <div class="stats-row" id="progStats" style="margin-top:20px"></div>
       <div class="panel" style="margin-top:18px">
         <div class="sec-head" style="margin:0 0 6px"><h2 class="sec" style="font-size:23px">Calendrier d'activité</h2><span style="font-size:12px;color:var(--ink3);font-weight:700">16 dernières semaines</span></div>
@@ -672,12 +684,10 @@ h2.sec{font-weight:800}
       <div class="duo">
         <div class="panel">
           <h3>Temps d'engagement — 7 derniers jours</h3>
-          <p>Minutes de lecture, d'écoute et de mémorisation confondues.</p>
           <div class="bars" id="weekBars"></div>
         </div>
         <div class="panel">
           <h3>Session du jour</h3>
-          <p>Chaque ouverture de sourate, chaque écoute et chaque verset travaillé nourrissent automatiquement ce suivi. Vous pouvez aussi consigner une session faite sur un mushaf papier.</p>
           <button class="btn gold" id="addSessionBtn">Consigner la session du jour (+15 min)</button>
           <div style="margin-top:14px;font-size:13px;color:var(--ink2)" id="todayLine"></div>
         </div>
@@ -687,7 +697,7 @@ h2.sec{font-weight:800}
 
       <div class="panel" style="margin-top:22px">
         <h3>Sauvegarde et restauration</h3>
-        <p>Toutes vos données vivent sur cet appareil, dans votre navigateur : progression et série, favoris, plans de mémorisation et de lecture, flashcards Leitner et réglages. Exportez-les dans un fichier pour les mettre à l'abri ou les emporter sur un autre appareil — puis réimportez ce fichier pour tout retrouver.</p>
+        <p>Exportez vos données (progression, favoris, plans, réglages) dans un fichier, puis réimportez-le sur un autre appareil.</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
           <button class="btn gold" id="exportBtn"><svg class="ic sm" viewBox="0 0 24 24"><path d="M12 4v10.5"/><path d="m7.5 11 4.5 4.5L16.5 11"/><path d="M4.5 20h15"/></svg> Exporter mes données</button>
           <button class="btn ghost" id="importBtn"><svg class="ic sm" viewBox="0 0 24 24"><path d="M12 14.5V4"/><path d="m7.5 7.5L12 3l4.5 4.5"/><path d="M4.5 20h15"/></svg> Importer mes données</button>
@@ -697,7 +707,7 @@ h2.sec{font-weight:800}
       </div>
           </div>
 
-      <p class="foot-note">Textes arabes : édition du Mushaf de Médine. Traductions françaises : sens des versets, d'après la traduction de Muhammad Hamidullah — et, au choix dans le lecteur, la traduction de Rachid Maach (Encyclopédie du Saint Coran, quranenc.com). Le Coran complet — texte arabe et traduction — est intégré à l'application : les 114 sourates se lisent et se mémorisent hors connexion. Seules les récitations audio sont diffusées en streaming (Mishary Rashid Alafasy, Mahmoud Khalil Al-Hussary et Mohamed Siddiq El-Minshawi, rejoints par Ali Al-Hudhaify, Maher Al-Muaiqly, Abdul Basit Abdus-Samad, Abdul Rahman As-Sudais, Saood Ash-Shuraym, Ahmed al-Ajamy, Abu Bakr Ash-Shaatree, Muhammad Jibreel, Hani ar-Rifai, Yasser Ad-Dossari et Saad Al-Ghamdi — CDN Islamic Network, miroir EveryAyah).</p>
+      <p class="foot-note">Textes arabes : Mushaf de Médine. Traductions : Muhammad Hamidullah et Rachid Maach (quranenc.com).<br><br>Application conçue et réalisée par <b>Mouctar Bah</b>.</p>
     </section>
 
     <!-- LIRE -->
@@ -705,10 +715,8 @@ h2.sec{font-weight:800}
       <div id="readList">
         <div class="kicker">Lecture</div>
         <h1 class="page">Les 114 sourates</h1>
-        <p class="lede">Texte arabe intégral et traduction française, verset par verset — le Coran complet est intégré à l'application et se lit hors connexion. Touchez une sourate pour l'ouvrir, ou lancez directement son écoute.</p>
         <div id="searchPanel" style="display:none;border:1px solid var(--line);background:var(--card);border-radius:18px;padding:20px;margin:16px 0 4px;box-shadow:var(--shadow)">
       <h2 class="sec" style="font-size:24px;margin-bottom:6px">Fouiller tout le Coran</h2>
-      <p class="lede">Un mot, une expression — la recherche parcourt les 6 236 versets : le texte arabe (avec ou sans voyelles), la traduction française et la translittération. Touchez un résultat pour ouvrir le lecteur au bon verset.</p>
       <div class="toolbar">
         <label class="search"><svg class="ic sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg><input id="fullSearch" type="search" placeholder="Ex. miséricorde, paradis, ٱلرَّحْمَٰن…" aria-label="Rechercher dans tout le Coran"></label>
         <button class="btn gold sm" id="fullSearchBtn" style="padding:10px 18px">Rechercher</button>
@@ -722,7 +730,7 @@ h2.sec{font-weight:800}
       </div>
       <div id="searchMeta" style="font-size:13px;color:var(--ink2);font-weight:700;margin:12px 0 4px"></div>
       <div id="searchResults" style="margin-top:10px">
-        <div class="empty"><span class="serif">6 236 versets à portée de question</span>Écrivez au moins deux lettres, en arabe ou en français, puis lancez la recherche.</div>
+        <div class="empty"><span class="serif">Recherche dans tout le Coran</span>Au moins deux lettres, en arabe ou en français.</div>
       </div>
             </div>
 
@@ -748,21 +756,20 @@ h2.sec{font-weight:800}
     <section class="view" id="view-memo">
       <div class="kicker">Hifz — Mémorisation</div>
       <h1 class="page">Apprendre, verset par verset</h1>
-      <p class="lede">Choisissez une sourate, écoutez le verset en boucle, masquez les mots et récitez de mémoire. Touchez un mot masqué pour le révéler. Marquez les versets difficiles : ils rejoindront votre liste de révision.</p>
       <div class="sec-head"><h2 class="sec">Méthodes de mémorisation</h2></div>
       <div class="methods">
-        <button class="method-card rec" data-method="listen"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><path d="M4 10.5v3a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2z"/><path d="M20 10.5v3a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2z"/><path d="M7 8.5a5.5 5.5 0 0 1 10 0"/><path d="M17 15.5a2.5 2.5 0 0 1-2.5 2.5H12"/></svg></span><span class="mt">Écouter et répéter</span><span class="md">Le verset en boucle avec le récitateur, puis masquage progressif des mots.</span><span class="mm">Méthode recommandée</span></button>
-        <button class="method-card" data-method="read"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><path d="M12 6c-1.7-1.4-4-2-7.5-2H3v14h2c3.5 0 5.5.6 7 2 1.5-1.4 3.5-2 7-2h2V4h-1.5C16 4 13.7 4.6 12 6z"/><path d="M12 6v14"/></svg></span><span class="mt">Lecture</span><span class="md">Relire la sourate entière dans le lecteur, tajwid en couleurs et traduction.</span><span class="mm">Ouvrir le lecteur</span></button>
-        <button class="method-card" data-method="puzzle"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="3.5"/></svg></span><span class="mt">Puzzle</span><span class="md">Les mots du verset sont mélangés : remettez-les dans le bon ordre.</span><span class="mm">Jouer</span></button>
-        <button class="method-card" data-method="quiz"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4A2.5 2.5 0 1 1 12 12.4v.6"/><circle cx="12" cy="16.8" r=".4" fill="currentColor"/></svg></span><span class="mt">Quiz</span><span class="md">Une référence, quatre propositions : retrouvez le bon verset et marquez des points.</span><span class="mm">10 questions</span></button>
-        <button class="method-card" data-method="cards"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><path d="m12 3.5 9 4.7-9 4.7-9-4.7z"/><path d="m3.6 13.2 8.4 4.4 8.4-4.4"/></svg></span><span class="mt">Flashcards</span><span class="md">Vos versets difficiles en cartes Leitner, de la boîte 1 à la boîte 6.</span><span class="mm" id="hubFcMeta">Cartes du jour : 0</span></button>
-        <button class="method-card" data-method="recite"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><rect x="9" y="2.8" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"/><path d="M12 18v3.2"/></svg></span><span class="mt">Réciter et être corrigé</span><span class="md">Récitez à voix haute : chaque mot est comparé au texte, juste en vert, à revoir en rouge.</span><span class="mm">Micro requis</span></button>
+        <button class="method-card rec" data-method="listen"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><path d="M4 10.5v3a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2z"/><path d="M20 10.5v3a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2z"/><path d="M7 8.5a5.5 5.5 0 0 1 10 0"/><path d="M17 15.5a2.5 2.5 0 0 1-2.5 2.5H12"/></svg></span><span class="mt">Écouter et répéter</span><span class="mm">Méthode recommandée</span></button>
+        <button class="method-card" data-method="read"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><path d="M12 6c-1.7-1.4-4-2-7.5-2H3v14h2c3.5 0 5.5.6 7 2 1.5-1.4 3.5-2 7-2h2V4h-1.5C16 4 13.7 4.6 12 6z"/><path d="M12 6v14"/></svg></span><span class="mt">Lecture</span><span class="mm">Ouvrir le lecteur</span></button>
+        <button class="method-card" data-method="puzzle"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="3.5"/></svg></span><span class="mt">Puzzle</span><span class="mm">Jouer</span></button>
+        <button class="method-card" data-method="quiz"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4A2.5 2.5 0 1 1 12 12.4v.6"/><circle cx="12" cy="16.8" r=".4" fill="currentColor"/></svg></span><span class="mt">Quiz</span><span class="mm">10 questions</span></button>
+        <button class="method-card" data-method="cards"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><path d="m12 3.5 9 4.7-9 4.7-9-4.7z"/><path d="m3.6 13.2 8.4 4.4 8.4-4.4"/></svg></span><span class="mt">Flashcards</span><span class="mm" id="hubFcMeta">Cartes du jour : 0</span></button>
+        <button class="method-card" data-method="recite"><span class="mi"><svg class="ic lg" viewBox="0 0 24 24"><rect x="9" y="2.8" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0"/><path d="M12 18v3.2"/></svg></span><span class="mt">Réciter et être corrigé</span><span class="mm">Micro requis</span></button>
       </div>
       <div id="hubPanels">
-        <div class="mpanel" id="panel-quiz" hidden><h3>Quiz — quel est ce verset ?</h3><p class="sub">Les questions portent sur les sourates de votre plan de mémorisation ou celles que vous avez déjà travaillées — à défaut, sur le Juz' 30.</p><div id="quizBox"></div></div>
-        <div class="mpanel" id="panel-cards" hidden><h3>Flashcards — la méthode Leitner</h3><p class="sub">Chaque verset marqué « difficile » devient une carte. Réussie, elle monte d'une boîte et revient plus tard ; ratée, elle repart en boîte 1, à revoir dès demain. C'est la répétition espacée qui ancre le hifz.</p><div id="fcBox"></div></div>
-        <div class="mpanel" id="panel-puzzle" hidden><h3>Puzzle — l'ordre des mots</h3><p class="sub">Touchez les mots dans le bon ordre pour reconstruire le verset, comme on récite : du premier mot au dernier.</p><div id="puzzleBox"></div></div>
-        <div class="mpanel" id="panel-recite" hidden><h3>Réciter et être corrigé</h3><p class="sub">Touchez le micro et récitez le verset à voix haute : votre récitation est comparée mot à mot au texte du mushaf. Soyons honnêtes : la reconnaissance vocale passe par les serveurs de votre navigateur — elle demande une connexion internet et fonctionne surtout dans Chrome. Tout le reste de Tilāwa fonctionne hors ligne.</p><div id="reciteBox"></div></div>
+        <div class="mpanel" id="panel-quiz" hidden><h3>Quiz — quel est ce verset ?</h3><div id="quizBox"></div></div>
+        <div class="mpanel" id="panel-cards" hidden><h3>Flashcards — la méthode Leitner</h3><div id="fcBox"></div></div>
+        <div class="mpanel" id="panel-puzzle" hidden><h3>Puzzle — l'ordre des mots</h3><div id="puzzleBox"></div></div>
+        <div class="mpanel" id="panel-recite" hidden><h3>Réciter et être corrigé</h3><div id="reciteBox"></div></div>
       </div>
 
       <div id="hifzPlan" style="margin-top:20px"></div>
@@ -775,18 +782,12 @@ h2.sec{font-weight:800}
           <button data-mask="60" class="on">Moyen</button>
           <button data-mask="100">Total</button>
         </div>
+        <select class="sel" id="memoReciter" aria-label="Récitateur (mémorisation)"></select>
+        <button class="chipbtn on" id="memoFollow" aria-pressed="true">Suivi synchronisé</button>
       </div>
       <div id="memoStage"></div>
-      <div class="sec-head"><h2 class="sec">La méthode en quatre temps</h2></div>
-      <div class="duo" style="margin-top:0">
-        <div class="panel"><h3>1 · Écouter</h3><p>Lancez le verset et répétez-le avec le récitateur, trois à cinq fois, en suivant le texte des yeux.</p></div>
-        <div class="panel"><h3>2 · Masquer</h3><p>Augmentez le masquage progressivement : d'abord quelques mots, puis le verset entier.</p></div>
-        <div class="panel"><h3>3 · Réciter</h3><p>Récitez à voix haute sans regarder. Un doute ? Touchez le mot pour le révéler, puis recommencez.</p></div>
-        <div class="panel"><h3>4 · Ancrer</h3><p>Validez « Je le connais » ou marquez « Difficile ». Les versets difficiles vous attendent dans la section Révision, plus bas dans cet onglet.</p></div>
-      </div>
       <div id="memoReview" style="margin-top:8px">
       <div class="sec-head"><h2 class="sec">Révision — les versets à revoir</h2></div>
-      <p class="lede">Les versets que vous avez marqués « difficiles » pendant la mémorisation. Écoutez-les, relisez-les, puis retirez-les de la liste quand ils sont acquis.</p>
       <div id="reviewList" style="margin-top:18px"></div>
           </div>
     </section>
@@ -795,7 +796,6 @@ h2.sec{font-weight:800}
     <section class="view" id="view-listen">
       <div class="kicker">Écoute</div>
       <h1 class="page">La récitation, en continu</h1>
-      <p class="lede">Écoutez une sourate entière, ou verset par verset pour accompagner la mémorisation — avec répétition automatique du verset en cours.</p>
       <div class="toolbar">
         <label class="search"><svg class="ic sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg><input id="listenSearch" type="search" placeholder="Rechercher une sourate…" aria-label="Rechercher une sourate à écouter"></label>
         <select class="sel" id="reciterSel" aria-label="Récitateur">
@@ -809,10 +809,9 @@ h2.sec{font-weight:800}
         <button class="chipbtn" id="verseModeBtn">Mode verset par verset</button>
         <button class="chipbtn" id="repeatBtn">Répéter le verset ×3</button>
       </div>
-      <div class="notice" id="listenModeNote"><b>Écoute continue</b> — la sourate se joue d'une traite. Activez le <b>mode verset par verset</b> pour suivre le texte et répéter chaque verset.</div>
       <div class="panel dl-panel">
         <h3>Écoute hors ligne — vos téléchargements</h3>
-        <p>Le bouton de téléchargement, dans la liste ci-dessous, enregistre la sourate entière pour le récitateur sélectionné : elle se lira ensuite sans connexion, et la liste la marquera « Hors ligne ». Tout est conservé sur cet appareil, dans le navigateur. Attention à la place : le Coran audio complet pèse plusieurs gigaoctets par récitateur — téléchargez sourate par sourate, selon vos besoins.</p>
+        <p>Téléchargez une sourate (bouton dans la liste ci-dessous) pour l'écouter sans connexion.</p>
         <div id="dlList"></div>
         <div id="dlTotal" style="font-size:12.5px;color:var(--ink3);font-weight:700;margin-top:10px"></div>
       </div>
@@ -823,7 +822,6 @@ h2.sec{font-weight:800}
     <section class="view" id="view-favorites">
       <div class="kicker">Favoris</div>
       <h1 class="page">Vos versets épinglés</h1>
-      <p class="lede">Les versets que vous avez marqués d'un cœur dans le lecteur. Relisez-les, réécoutez-les un par un — ou à la suite — et retrouvez-les ici à chaque visite : ils sont conservés sur cet appareil.</p>
       <div id="favList" style="margin-top:18px"></div>
     </section>
 
@@ -863,7 +861,7 @@ h2.sec{font-weight:800}
     <p class="tf-fr" id="tfFr"></p>
     <div class="tf-body" id="tfBody"></div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px"><button class="btn sm gold" id="tfListen">Écouter le verset</button><button class="btn sm ghost" id="tfGoto">Ouvrir dans le lecteur</button></div>
-    <p class="tf-src">Explication : Al-Mukhtasar fī tafsīr al-Qur'ān al-Karīm, traduction française — Encyclopédie du Saint Coran (quranenc.com), chargée en ligne au toucher du verset. Hors ligne, la traduction française du verset reste affichée ci-dessus.</p>
+    <p class="tf-src">Tafsir Al-Mukhtasar — Encyclopédie du Saint Coran (quranenc.com).</p>
   </div>
 </div>
 
@@ -905,7 +903,6 @@ h2.sec{font-weight:800}
       <button class="fp-tool" id="fpSpeedBtn"><span class="ic-wrap"><svg class="ic lg" viewBox="0 0 24 24"><path d="m13.5 8.5-2.8 4.8"/><path d="M5 19.5a9 9 0 1 1 14 0"/></svg></span><span id="fpSpeedLbl">Vitesse · 1×</span></button>
       <button class="fp-tool" id="fpDl"><span class="ic-wrap"><svg class="ic lg" viewBox="0 0 24 24"><path d="M12 4v10.5"/><path d="m7.5 11 4.5 4.5L16.5 11"/><path d="M4.5 20h15"/></svg></span><span id="fpDlLbl">Hors ligne</span></button>
     </div>
-    <p style="text-align:center;font-size:12px;color:var(--ink3);margin-top:24px" id="fpModeNote"></p>
   </div>
 </div>
 
@@ -915,14 +912,14 @@ h2.sec{font-weight:800}
 <!-- Guide de démarrage — premier lancement uniquement -->
 <div class="guide" id="guide" aria-hidden="true">
   <div class="guide-card" role="dialog" aria-modal="true" aria-label="Guide de démarrage">
-    <div class="guide-brand">Til<em>ā</em>wa</div>
+    <div class="guide-brand">Al-Fur<em>qan</em></div>
     <div class="guide-sub">Lire · Mémoriser · Écouter</div>
     <div class="guide-title">Bienvenue</div>
-    <p class="guide-txt">Le Coran complet — texte arabe et traduction française — vous accompagne partout, même hors connexion. Par où voulez-vous commencer ?</p>
+    <p class="guide-txt">Le Coran complet, en arabe et en français. Par où commencer ?</p>
     <div class="guide-choices">
       <button class="guide-choice" data-guide="read"><span class="gc-ic"><svg class="ic lg" viewBox="0 0 24 24"><path d="M12 6c-1.7-1.4-4-2-7.5-2H3v14h2c3.5 0 5.5.6 7 2 1.5-1.4 3.5-2 7-2h2V4h-1.5C16 4 13.7 4.6 12 6z"/><path d="M12 6v14"/></svg></span><span><b>Lire le Coran</b><small>Les 114 sourates, en arabe avec la traduction française et le tafsir.</small></span><span class="gc-arr"><svg class="ic" viewBox="0 0 24 24"><path d="m9.5 5.5 6.5 6.5-6.5 6.5"/></svg></span></button>
       <button class="guide-choice" data-guide="memo"><span class="gc-ic"><svg class="ic lg" viewBox="0 0 24 24"><path d="M12 3.5 3.5 8 12 12.5 20.5 8z"/><path d="M6.5 10.5V16c0 1.7 2.5 3 5.5 3s5.5-1.3 5.5-3v-5.5"/><path d="M20.5 8v5"/></svg></span><span><b>Mémoriser</b><small>Apprenez verset par verset : masquage, quiz, flashcards et récitation corrigée.</small></span><span class="gc-arr"><svg class="ic" viewBox="0 0 24 24"><path d="m9.5 5.5 6.5 6.5-6.5 6.5"/></svg></span></button>
-      <button class="guide-choice" data-guide="listen"><span class="gc-ic"><svg class="ic lg" viewBox="0 0 24 24"><path d="M4 10.5v3a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2z"/><path d="M20 10.5v3a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2z"/><path d="M7 8.5a5.5 5.5 0 0 1 10 0"/><path d="M17 15.5a2.5 2.5 0 0 1-2.5 2.5H12"/></svg></span><span><b>Écouter</b><small>Quatorze récitateurs, écoute continue ou verset par verset, et téléchargements hors ligne.</small></span><span class="gc-arr"><svg class="ic" viewBox="0 0 24 24"><path d="m9.5 5.5 6.5 6.5-6.5 6.5"/></svg></span></button>
+      <button class="guide-choice" data-guide="listen"><span class="gc-ic"><svg class="ic lg" viewBox="0 0 24 24"><path d="M4 10.5v3a2 2 0 0 0 2 2h1v-7H6a2 2 0 0 0-2 2z"/><path d="M20 10.5v3a2 2 0 0 1-2 2h-1v-7h1a2 2 0 0 1 2 2z"/><path d="M7 8.5a5.5 5.5 0 0 1 10 0"/><path d="M17 15.5a2.5 2.5 0 0 1-2.5 2.5H12"/></svg></span><span><b>Écouter</b><small>Vingt-trois récitateurs, écoute continue ou verset par verset, et téléchargements hors ligne.</small></span><span class="gc-arr"><svg class="ic" viewBox="0 0 24 24"><path d="m9.5 5.5 6.5 6.5-6.5 6.5"/></svg></span></button>
     </div>
     <button class="guide-skip" id="guideSkip">Passer cette étape</button>
   </div>
@@ -932,6 +929,7 @@ h2.sec{font-weight:800}
 <audio id="audio" preload="none"></audio>
 <script src="assets/data.js"></script>
 <script src="assets/trans2.js"></script>
+<script src="assets/reciters-data.js"></script>
 
 <script>
 /* ================= GARDE DE DÉMARRAGE ================= */
@@ -950,7 +948,7 @@ h2.sec{font-weight:800}
 
 /* ================= ÉTAT (localStorage) ================= */
 const LS_KEY="tilawa_v1";
-let S={activity:{},memorized:{},difficult:{},favorites:{},lastRead:{surah:1,verse:1},sessions:0,theme:null,tajwid:true,translit:false,hifzPlan:null,flashcards:{},downloads:{},reciter:null,arSize:29,seenGuide:false,khatma:null,trad:"hamidullah"};
+let S={activity:{},memorized:{},difficult:{},favorites:{},lastRead:{surah:1,verse:1},sessions:0,theme:null,tajwid:true,translit:false,hifzPlan:null,flashcards:{},downloads:{},reciter:null,arSize:29,seenGuide:false,khatma:null,trad:"hamidullah",follow:true,mushaf:false};
 try{const raw=localStorage.getItem(LS_KEY);if(raw){const p=JSON.parse(raw);if(p&&typeof p==="object")S=Object.assign(S,p);}}catch(e){}
 function save(){try{localStorage.setItem(LS_KEY,JSON.stringify(S));}catch(e){}}
 /* État laissé par une version précédente ou partiellement corrompu : on
@@ -966,15 +964,24 @@ if(!S.flashcards||typeof S.flashcards!=="object"||Array.isArray(S.flashcards))S.
 if(!S.downloads||typeof S.downloads!=="object"||Array.isArray(S.downloads))S.downloads={};
 if(S.khatma!==null&&(!S.khatma||typeof S.khatma!=="object"||!Array.isArray(S.khatma.portions)||!S.khatma.portions.length||!(+S.khatma.days>=1)||!S.khatma.done||typeof S.khatma.done!=="object"||Array.isArray(S.khatma.done)))S.khatma=null;
 if(S.trad!=="maach")S.trad="hamidullah";
+if(typeof S.follow!=="boolean")S.follow=true;
+if(typeof S.mushaf!=="boolean")S.mushaf=false;
 /* ---------- Thème jour / nuit ---------- */
 let tajwidOn=S.tajwid!==false;
+let followSync=S.follow!==false;
+let mushafMode=S.mushaf===true;
+function setFollow(v){
+  followSync=!!v;S.follow=followSync;save();
+  const mf=document.getElementById("memoFollow");
+  if(mf){mf.classList.toggle("on",followSync);mf.setAttribute("aria-pressed",String(followSync));}
+}
 function isDark(){return document.documentElement.getAttribute("data-theme")==="dark";}
 function applyTheme(){
   if(S.theme==="dark"||S.theme==="light")document.documentElement.setAttribute("data-theme",S.theme);
   else document.documentElement.removeAttribute("data-theme");
   syncThemeBtns();
 }
-function toggleTheme(){S.theme=isDark()?"light":"dark";save();applyTheme();toast(isDark()?"Mode nuit — encre profonde, vert sombre. Bonne lecture.":"Mode jour — vert clair, bonne lecture.");}
+function toggleTheme(){S.theme=isDark()?"light":"dark";save();applyTheme();toast(isDark()?"Mode nuit activé.":"Mode jour activé.");}
 function syncThemeBtns(){
   const dark=isDark();
   const label=dark?"Passer en mode jour":"Passer en mode nuit";
@@ -1120,6 +1127,7 @@ function setArSize(nz){
     el.style.setProperty("--frsize",frSizeFor(arSize)+"px");
     el.style.setProperty("--trsize",trSizeFor(arSize)+"px");
   });
+  const mf=document.querySelector(".mushaf");if(mf)mf.style.setProperty("--arsize",arSize+"px");
 }
 async function openSurah(n,verse){
   go("read");readerOpen=true;
@@ -1132,7 +1140,7 @@ async function openSurah(n,verse){
   try{verses=await ensureText(n);}
   catch(e){
     $("reader").innerHTML='<button class="back" id="rdBack">'+ic("chevL","sm")+' Toutes les sourates</button>'
-    +'<div class="empty" style="margin-top:16px"><span class="serif">Ouverture interrompue</span>Un souci technique a empêché l\'affichage de cette sourate. Son texte est pourtant intégré à l\'application : réessayez dans un instant.<div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn sm gold" id="rdRetry">Réessayer</button><button class="btn sm ghost" id="rdListen">Écouter la sourate</button></div></div>';
+    +'<div class="empty" style="margin-top:16px"><span class="serif">Ouverture interrompue</span>Un souci technique a empêché l\'affichage. Réessayez dans un instant.<div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn sm gold" id="rdRetry">Réessayer</button><button class="btn sm ghost" id="rdListen">Écouter la sourate</button></div></div>';
     $("rdBack").addEventListener("click",closeReader);
   const pgPrev=$("rdPgPrev"),pgNext=$("rdPgNext");
   if(pgPrev)pgPrev.addEventListener("click",()=>{const tg=firstVerseOfPage(curPg-1);if(tg)openSurah(tg[0],tg[1]);});
@@ -1165,16 +1173,26 @@ function renderReader(n,verses,focusVerse){
   h+='<div class="reader-tools">'
     +'<button class="chipbtn" id="rdPlayAll">'+ic("play","sm")+' Tout écouter</button>'
     +'<button class="chipbtn" id="rdPlayVerses">'+ic("listen","sm")+' Verset par verset</button>'
+    +'<button class="chipbtn" id="rdSyncPlay">'+ic("listen","sm")+' Lecture synchronisée</button>'
     +'<button class="chipbtn" id="rdMemo">'+ic("memo","sm")+' Mémoriser</button>'
     +'<button class="chipbtn" id="rdMinus" aria-label="Réduire la taille du texte" title="Réduire la taille du texte">A −</button>'
     +'<button class="chipbtn" id="rdPlus" aria-label="Augmenter la taille du texte" title="Augmenter la taille du texte">A +</button>'
     +'<button class="chipbtn '+(showFr?"on":"")+'" id="rdFr">Traduction</button>'
     +'<button class="chipbtn '+(showTr?"on":"")+'" id="rdTr">Translittération</button>'
     +'<button class="chipbtn '+(tajwidOn?"on":"")+'" id="rdTajwid">Tajwid</button>'
+    +'<button class="chipbtn '+(followSync?"on":"")+'" id="rdFollow">Suivi synchronisé</button>'
+    +'<button class="chipbtn '+(mushafMode?"on":"")+'" id="rdMushaf">Mushaf</button>'
     +'<span class="chipbtn" style="gap:7px">Traduction <select id="rdTrad" class="sel" style="padding:5px 9px;font-size:12.5px" aria-label="Choisir la traduction française"><option value="hamidullah"'+(tradSel()==="hamidullah"?" selected":"")+'>Hamidullah</option><option value="maach"'+(tradSel()==="maach"?" selected":"")+'>Rachid Maach</option></select></span>'
+    +'<span class="chipbtn" style="gap:7px">Récitateur <select id="rdReciter" class="sel" style="padding:5px 9px;font-size:12.5px" aria-label="Choisir le récitateur">'+RECITERS.map(r=>'<option value="'+r.id+'"'+(r.id===reciter?" selected":"")+'>'+r.name+'</option>').join("")+'</select></span>'
     +'<button class="chipbtn" id="rdSearch">'+ic("search","sm")+' Rechercher</button>'
     +'<button class="chipbtn" id="rdTheme"></button></div>';
-  if(tajwidOn)h+=tjLegendHtml();
+  if(tajwidOn&&!mushafMode)h+=tjLegendHtml();
+  if(mushafMode){
+    h+='<div class="mushaf" style="--arsize:'+arSize+'px"><p class="mushaf-txt">'
+      +verses.map((v,i)=>escapeHtml(v.ar)+' <span class="mv-end">'+toArNum(i+1)+'</span>').join(" ")
+      +'</p></div>'
+      +'<p class="mushaf-note">Mode Mushaf — le texte seul. Touchez « Mushaf » pour revenir au lecteur complet.</p>';
+  } else {
   h+='<div id="rdVerses">'+verses.map((v,i)=>{
     const vn=i+1,k=key(n,vn),playing=player.mode==="verse"&&player.surah===n&&player.verse===vn&&!audio.paused;
     const trTxt=(typeof TRANSLIT!=="undefined"&&TRANSLIT[n])?TRANSLIT[n][i]:"";
@@ -1194,6 +1212,7 @@ function renderReader(n,verses,focusVerse){
     +'<button class="vact" data-act="memo" data-s="'+n+'" data-v="'+vn+'">'+ic("eyeOff")+' Mémoriser</button>'
     +'</div><div class="sim-slot" id="sim-'+n+'-'+vn+'"></div></article>';
   }).join("")+'</div>';
+  }
   const curPg=pageOf(n,focusVerse||verseStartOf(n));
   h+='<div class="pagenav"><button id="rdPgPrev" '+(curPg<=1?"disabled":"")+' aria-label="Page précédente">'+ic("chevL")+'</button><span class="pg-lbl">Page '+curPg+' / 604</span><button id="rdPgNext" '+(curPg>=604?"disabled":"")+' aria-label="Page suivante">'+ic("chevR")+'</button></div>';
   h+='<div class="rule"><span class="dia"></span></div><p style="text-align:center;color:var(--ink3);font-size:12.5px">Fin de la sourate '+m[2]+' — صدق الله العظيم</p>';
@@ -1201,18 +1220,23 @@ function renderReader(n,verses,focusVerse){
   $("rdBack").addEventListener("click",closeReader);
   $("rdPlayAll").addEventListener("click",()=>playSurah(n));
   $("rdPlayVerses").addEventListener("click",()=>startVerseChain(n,verseStartOf(n)));
+  $("rdSyncPlay").addEventListener("click",()=>{if(!followSync)setFollow(true);startVerseChain(n,focusVerse||verseStartOf(n));toast("Lecture synchronisée activée.");});
+  $("rdFollow").addEventListener("click",()=>{setFollow(!followSync);renderReader(n,verses,focusVerse);toast(followSync?"Suivi synchronisé activé.":"Suivi synchronisé coupé.");});
+  $("rdMushaf").addEventListener("click",()=>{mushafMode=!mushafMode;S.mushaf=mushafMode;save();renderReader(n,verses,focusVerse);toast(mushafMode?"Mode Mushaf — le texte seul.":"Lecteur complet.");});
+  const rdRecEl=$("rdReciter");
+  if(rdRecEl)rdRecEl.addEventListener("change",()=>setReciter(rdRecEl.value));
   $("rdMemo").addEventListener("click",()=>startMemo(n,focusVerse||1));
   $("rdMinus").addEventListener("click",()=>setArSize(arSize-3));
   $("rdPlus").addEventListener("click",()=>setArSize(arSize+3));
   $("rdFr").addEventListener("click",()=>{showFr=!showFr;renderReader(n,verses,focusVerse);});
-  $("rdTr").addEventListener("click",()=>{showTr=!showTr;S.translit=showTr;save();renderReader(n,verses,focusVerse);toast(showTr?"Translittération affichée — chaque verset apparaît aussi en caractères latins.":"Translittération masquée.");});
-  $("rdTajwid").addEventListener("click",()=>{tajwidOn=!tajwidOn;S.tajwid=tajwidOn;save();renderReader(n,verses,focusVerse);toast(tajwidOn?"Coloration tajwid activée — les règles de prononciation apparaissent en couleur.":"Coloration tajwid désactivée.");});
+  $("rdTr").addEventListener("click",()=>{showTr=!showTr;S.translit=showTr;save();renderReader(n,verses,focusVerse);toast(showTr?"Translittération affichée.":"Translittération masquée.");});
+  $("rdTajwid").addEventListener("click",()=>{tajwidOn=!tajwidOn;S.tajwid=tajwidOn;save();renderReader(n,verses,focusVerse);toast(tajwidOn?"Coloration tajwid activée.":"Coloration tajwid désactivée.");});
   const rdTradEl=$("rdTrad");
-  if(rdTradEl)rdTradEl.addEventListener("change",()=>{S.trad=rdTradEl.value==="maach"?"maach":"hamidullah";save();renderReader(n,verses,focusVerse);toast(S.trad==="maach"?"Traduction de Rachid Maach affichée — comparez-la avec Hamidullah verset par verset.":"Traduction de Muhammad Hamidullah affichée.");});
+  if(rdTradEl)rdTradEl.addEventListener("change",()=>{S.trad=rdTradEl.value==="maach"?"maach":"hamidullah";save();renderReader(n,verses,focusVerse);toast(S.trad==="maach"?"Traduction de Rachid Maach affichée.":"Traduction de Muhammad Hamidullah affichée.");});
   $("rdSearch").addEventListener("click",()=>{closeReader();openSearchPanel(true);});
   $("rdTheme").addEventListener("click",()=>{toggleTheme();syncThemeBtns();});
   syncThemeBtns();
-  $("rdVerses").addEventListener("click",e=>{
+  const rdV=$("rdVerses");if(rdV)rdV.addEventListener("click",e=>{
     const b=e.target.closest("[data-act]");if(!b)return;
     const s=+b.dataset.s,v=+b.dataset.v;
     if(b.dataset.act==="play")playSingleVerse(s,v);
@@ -1240,7 +1264,7 @@ async function shareVerse(s,v,verseObj){
   const text=verseObj.ar+"\n\n"
     +(trTxt?trTxt+"\n\n":"")
     +"« "+(verseObj.fr||"")+" »\n\n"
-    +"— "+ref+" · Tilāwa";
+    +"— "+ref+" · Al-Furqan";
   if(typeof navigator!=="undefined"&&typeof navigator.share==="function"){
     try{await navigator.share({title:ref,text:text});return;}
     catch(e){if(e&&e.name==="AbortError")return;/* autre refus : on tente la copie */}
@@ -1379,7 +1403,7 @@ async function startMemo(target,verse){
     memo.surah=target;memo.idx=Math.max(0,(verse||1)-1);
     $("memoStage").innerHTML='<div class="loading"><div class="spin"></div>Chargement de la sourate…</div>';
     try{memo.verses=await ensureText(target);}
-    catch(e){$("memoStage").innerHTML='<div class="empty"><span class="serif">Ouverture interrompue</span>Un souci technique a empêché l\'affichage de cette sourate. Son texte est intégré à l\'application : réessayez dans un instant.</div>';return;}
+    catch(e){$("memoStage").innerHTML='<div class="empty"><span class="serif">Ouverture interrompue</span>Un souci technique a empêché l\'affichage. Réessayez dans un instant.</div>';return;}
   }
   memo.extraHidden.clear();fillMemoSelect();renderMemoStage();logActivity(1);
 }
@@ -1434,7 +1458,7 @@ function renderMemoStage(){
   $("mmNext").addEventListener("click",()=>{if(memo.idx<memo.verses.length-1){memo.idx++;memo.extraHidden.clear();renderMemoStage();}});
   $("mmKnow").addEventListener("click",()=>{
     S.memorized[k]=true;delete S.difficult[k];save();buildNav();logActivity(2);
-    toast("Verset acquis. Barakallahou fik — continuez ainsi.");
+    toast("Verset acquis.");
     if(memo.idx<memo.verses.length-1){memo.idx++;memo.extraHidden.clear();}
     renderMemoStage();renderStreakBits();
   });
@@ -1491,7 +1515,7 @@ function renderHifzPlan(){
     +'<div class="ring-wrap"><svg class="plan-ring" viewBox="0 0 84 84" aria-hidden="true"><circle class="ring-bg" cx="42" cy="42" r="36"></circle><circle class="ring-fg" cx="42" cy="42" r="36" stroke-dasharray="'+CIRC+'" stroke-dashoffset="'+(CIRC*(1-pct/100)).toFixed(1)+'"></circle></svg>'
     +'<div class="ring-txt"><b>'+pct+' %</b><span>'+doneVerses+" / "+totalVerses+" versets</span></div></div>"
     +'<div style="flex:1;min-width:210px"><h3 class="serif" style="font-size:23px;font-weight:600;margin:0 0 4px">Mon plan de mémorisation</h3>'
-    +'<p style="margin:0;color:var(--ink2);font-size:13.5px">'+plan.surahs.length+" sourate"+(plan.surahs.length>1?"s":"")+" au programme · objectif de <b>"+plan.perDay+" versets par jour</b> · "+portions.length+" portions, "+doneCount+" accomplie"+(doneCount>1?"s":"")+". Cochez chaque portion lorsque vous l'avez apprise.</p>"
+    +'<p style="margin:0;color:var(--ink2);font-size:13.5px">'+plan.surahs.length+" sourate"+(plan.surahs.length>1?"s":"")+" au programme · objectif de <b>"+plan.perDay+" versets par jour</b> · "+portions.length+" portions, "+doneCount+" accomplie"+(doneCount>1?"s":"")+".</p>"
     +'<div class="plan-bar"><i style="width:'+pct+'%"></i></div>'
     +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center"><span style="font-size:13px;font-weight:800;color:var(--ink)">'+doneVerses+" / "+totalVerses+" versets</span>"
     +'<button class="btn sm ghost" id="planReset" style="margin-left:auto">Nouveau plan</button></div></div></div>'
@@ -1510,7 +1534,7 @@ function renderHifzPlan(){
   box.querySelectorAll("[data-pcheck]").forEach(b=>b.addEventListener("click",()=>{
     const i=+b.dataset.pcheck;
     if(S.hifzPlan.done[i]){delete S.hifzPlan.done[i];toast("Portion du jour "+(i+1)+" décochée.");}
-    else{S.hifzPlan.done[i]=true;logActivity(2);toast("Portion du jour "+(i+1)+" accomplie — très beau travail, continuez ainsi.");}
+    else{S.hifzPlan.done[i]=true;logActivity(2);toast("Portion du jour "+(i+1)+" accomplie.");}
     save();renderHifzPlan();
   }));
   box.querySelectorAll("[data-pwork]").forEach(b=>b.addEventListener("click",()=>{
@@ -1519,7 +1543,7 @@ function renderHifzPlan(){
   }));
   const rs=$("planReset");
   if(rs)rs.addEventListener("click",()=>{
-    if(rs.dataset.confirm){S.hifzPlan=null;save();planSel=null;renderHifzPlan();toast("Plan effacé — composez-en un nouveau quand vous voulez.");}
+    if(rs.dataset.confirm){S.hifzPlan=null;save();planSel=null;renderHifzPlan();toast("Plan effacé.");}
     else{rs.dataset.confirm="1";rs.textContent="Confirmer — effacer le plan actuel ?";rs.classList.remove("ghost");rs.classList.add("gold");}
   });
 }
@@ -1541,7 +1565,6 @@ function renderPlanSetup(box){
   if(!planSel)planSel=new Set();
   box.innerHTML='<div class="plan-card">'
   +'<h3 class="serif" style="font-size:23px;font-weight:600;margin:0 0 4px">Plan de mémorisation — hifz</h3>'
-  +'<p style="margin:0;color:var(--ink2);font-size:13.5px;max-width:64ch">Composez votre plan : choisissez les sourates à apprendre et votre objectif quotidien. L\'application découpe le tout en portions d\'un jour — cochez chaque portion accomplie et regardez l\'anneau se remplir. Le plan est conservé sur cet appareil, dans votre navigateur.</p>'
   +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center"><span class="plan-lbl">Les sourates</span>'
   +'<button class="chipbtn" id="planJuz30">Préréglage : Juz\' 30 (sourates 78 → 114)</button>'
   +'<button class="chipbtn" id="planAll">Toutes les sourates</button>'
@@ -1567,7 +1590,7 @@ function renderPlanSetup(box){
     if(!planSel||!planSel.size)return;
     S.hifzPlan={surahs:[...planSel].sort((a,b)=>a-b),perDay:planGoal,done:{},created:Date.now()};
     save();logActivity(1);renderHifzPlan();
-    toast("Plan créé — "+S.hifzPlan.surahs.length+" sourates à "+planGoal+" versets par jour. Bismillah, bon hifz !");
+    toast("Plan créé — "+S.hifzPlan.surahs.length+" sourates à "+planGoal+" versets par jour.");
     const el=$("hifzPlan");if(el)el.scrollIntoView({block:"start"});
   });
   updatePlanSummary();
@@ -1593,25 +1616,50 @@ let player={mode:null,surah:null,verse:null,queue:[],qi:0,repeatsLeft:0,loop:fal
 /* Récitateurs : identifiants vérifiés dans la liste officielle des éditions audio du CDN
    Islamic Network (api.alquran.cloud/v1/edition/format/audio) ; dossiers EveryAyah sondés en HTTP 200.
    Saad Al-Ghamdi n'a pas d'édition sur le CDN : il passe uniquement par le miroir EveryAyah. */
+/* Élargissement (23 récitateurs) : chaque ajout a été sondé en HTTP 200/206 sur les
+   versets 1 et 6236 (ou 001001/002255 côté EveryAyah) avant intégration —
+   ar.muhammadayyoub et ar.husarymujawwad répondent en 128 kbit/s ;
+   ar.abdullahbasfar, ar.aymanswoaid et ar.minshawimujawwad en 64 kbit/s seulement
+   (la chaîne de secours y bascule toute seule, comme pour ar.abdulsamad) ;
+   Matroud, Tablawi, Aziz Alili et Ibrahim Al-Akhdar passent par EveryAyah seul.
+   Le champ img désigne le portrait du récitateur (assets/reciters/) affiché dans le
+   lecteur ; à défaut de photo, les initiales prennent le relais. */
 const RECITERS=[
- {id:"ar.alafasy",name:"Mishary Rashid Alafasy",ea:"Alafasy_128kbps"},
- {id:"ar.husary",name:"Mahmoud Khalil Al-Hussary",ea:"Husary_128kbps"},
- {id:"ar.minshawi",name:"Mohamed Siddiq El-Minshawi",ea:"Minshawy_Murattal_128kbps"},
- {id:"ar.abdulsamad",name:"Abdul Basit Abdus-Samad",ea:"Abdul_Basit_Murattal_192kbps"},
- {id:"ar.abdurrahmaansudais",name:"Abdul Rahman As-Sudais",ea:"Abdurrahmaan_As-Sudais_192kbps"},
- {id:"ar.saoodshuraym",name:"Saood Ash-Shuraym",ea:"Saood_ash-Shuraym_128kbps"},
- {id:"ar.mahermuaiqly",name:"Maher Al-Muaiqly",ea:"MaherAlMuaiqly128kbps"},
- {id:"ar.hudhaify",name:"Ali Al-Hudhaify",ea:"Hudhaify_128kbps"},
- {id:"ar.ahmedajamy",name:"Ahmed ibn Ali al-Ajamy",ea:"Ahmed_ibn_Ali_al-Ajamy_128kbps"},
- {id:"ar.shaatree",name:"Abu Bakr Ash-Shaatree",ea:"Abu_Bakr_Ash-Shaatree_128kbps"},
- {id:"ar.muhammadjibreel",name:"Muhammad Jibreel",ea:"Muhammad_Jibreel_128kbps"},
- {id:"ar.hanirifai",name:"Hani ar-Rifai",ea:"Hani_ar-Rifai_192kbps"},
- {id:"ar.yasseraldossari",name:"Yasser Ad-Dossari",ea:"Yasser_Ad-Dussary_128kbps"},
- {id:"ea.ghamdi",name:"Saad Al-Ghamdi",ea:"Ghamadi_40kbps"}
+ {id:"ar.alafasy",name:"Mishary Rashid Alafasy",ea:"Alafasy_128kbps",img:"alafasy"},
+ {id:"ar.husary",name:"Mahmoud Khalil Al-Hussary",ea:"Husary_128kbps",img:"husary"},
+ {id:"ar.minshawi",name:"Mohamed Siddiq El-Minshawi",ea:"Minshawy_Murattal_128kbps",img:"minshawi"},
+ {id:"ar.abdulsamad",name:"Abdul Basit Abdus-Samad",ea:"Abdul_Basit_Murattal_192kbps",img:"abdulbasit"},
+ {id:"ar.abdurrahmaansudais",name:"Abdul Rahman As-Sudais",ea:"Abdurrahmaan_As-Sudais_192kbps",img:"sudais"},
+ {id:"ar.saoodshuraym",name:"Saood Ash-Shuraym",ea:"Saood_ash-Shuraym_128kbps",img:"shuraim"},
+ {id:"ar.mahermuaiqly",name:"Maher Al-Muaiqly",ea:"MaherAlMuaiqly128kbps",img:"maher"},
+ {id:"ar.hudhaify",name:"Ali Al-Hudhaify",ea:"Hudhaify_128kbps",img:"hudhaify"},
+ {id:"ar.ahmedajamy",name:"Ahmed ibn Ali al-Ajamy",ea:"Ahmed_ibn_Ali_al-Ajamy_128kbps",img:"ajamy"},
+ {id:"ar.shaatree",name:"Abu Bakr Ash-Shaatree",ea:"Abu_Bakr_Ash-Shaatree_128kbps",img:"shaatree"},
+ {id:"ar.muhammadjibreel",name:"Muhammad Jibreel",ea:"Muhammad_Jibreel_128kbps",img:"jibreel"},
+ {id:"ar.hanirifai",name:"Hani ar-Rifai",ea:"Hani_ar-Rifai_192kbps",img:"rifai"},
+ {id:"ar.yasseraldossari",name:"Yasser Ad-Dossari",ea:"Yasser_Ad-Dussary_128kbps",img:"dossari"},
+ {id:"ea.ghamdi",name:"Saad Al-Ghamdi",ea:"Ghamadi_40kbps",img:"ghamdi"},
+ {id:"ar.muhammadayyoub",name:"Muhammad Ayyoub",img:"ayyoub"},
+ {id:"ar.abdullahbasfar",name:"Abdullah Basfar",img:"basfar"},
+ {id:"ar.husarymujawwad",name:"Mahmoud Al-Hussary — Mujawwad",img:"husary"},
+ {id:"ar.minshawimujawwad",name:"Mohamed El-Minshawi — Mujawwad",img:"minshawi"},
+ {id:"ar.aymanswoaid",name:"Ayman Sowaid — Tajwid",img:"sowaid"},
+ {id:"ea.matroud",name:"Abdullah Matroud",ea:"Abdullah_Matroud_128kbps",img:"matroud"},
+ {id:"ea.tablawi",name:"Muhammad Mahmoud At-Tablawi",ea:"Mohammad_al_Tablaway_128kbps",img:"tablawi"},
+ {id:"ea.azizalili",name:"Aziz Alili",ea:"Aziz_Alili_128kbps",img:"azizalili"},
+ {id:"ea.ibrahimakhbar",name:"Ibrahim Al-Akhdar",ea:"Ibrahim_Akhdar_32kbps",img:"akhdar"}
 ];
 const reciterObj=()=>RECITERS.find(r=>r.id===reciter)||RECITERS[0];
 const reciterName=id=>{const r=RECITERS.find(x=>x.id===id);return r?r.name:id;};
 const reciterInitials=name=>name.split(/\s+/).filter(Boolean).slice(0,2).map(w=>w[0]).join("").toUpperCase();
+const reciterById=id=>RECITERS.find(x=>x.id===id);
+/* Portrait du récitateur, posé par-dessus les initiales : si la photo ne charge
+   pas, elle se retire et les initiales restent affichées. */
+function reciterImgHtml(r){
+  if(!r||!r.img)return "";
+  var _src=(window.RECITER_PHOTOS&&window.RECITER_PHOTOS[r.img])||('assets/reciters/'+r.img+'.jpg');
+  return '<img src="'+_src+'" alt="Photo de '+escapeHtml(r.name)+'" loading="lazy" onerror="this.remove()">';
+}
 const pad3=n=>String(n).padStart(3,"0");
 function verseUrls(s,v){
   const g=globalAyah(s,v);const ro=reciterObj();const list=[];
@@ -1737,17 +1785,38 @@ function loadQueueItem(){
   $("pTitle").textContent=m[2]+" — verset "+it.v;
   $("pSub").textContent="Verset "+it.v+(player.chainTotal?" / "+player.chainTotal:"")+(player.repeatsLeft>0?" · encore "+(player.repeatsLeft+1)+" écoutes":"");
   beginPlayback(()=>verseUrls(it.s,it.v));setPlayIcon();syncMediaSession();S.lastRead={surah:it.s,verse:it.v};save();
-  highlightPlayingVerse();markListenRow();
+  highlightPlayingVerse();markListenRow();syncMemoFollow();updateMemoPlaying();
 }
 function highlightPlayingVerse(){
   document.querySelectorAll(".verse.playing").forEach(el=>el.classList.remove("playing"));
-  if(player.mode==="verse"){const el=$("v-"+player.surah+"-"+player.verse);if(el){el.classList.add("playing");}}
+  if(player.mode!=="verse")return;
+  const el=$("v-"+player.surah+"-"+player.verse);
+  if(el){
+    el.classList.add("playing");
+    /* Suivi synchronisé : le texte défile tout seul pour garder le verset
+       récité à l'écran (désactivable via le bouton « Suivi synchronisé »). */
+    if(followSync&&curView==="read"&&readerOpen)el.scrollIntoView({behavior:"smooth",block:"center"});
+  }
 }
-audio.addEventListener("play",()=>{setPlayIcon();highlightPlayingVerse();});
+/* En mode Mémo, la carte affichée avance au rythme de la récitation quand
+   l'enchaînement verset par verset joue la sourate en cours de travail. */
+function syncMemoFollow(){
+  if(!followSync||curView!=="memo")return;
+  if(typeof memo==="undefined"||!memo.verses||memo.surah==="kursi")return;
+  if(player.mode==="verse"&&player.surah===memo.surah&&player.verse>=1&&player.verse<=memo.verses.length&&memo.idx!==player.verse-1){
+    memo.idx=player.verse-1;memo.extraHidden.clear();renderMemoStage();
+  }
+}
+function updateMemoPlaying(){
+  const st=document.querySelector(".memo-stage");if(!st)return;
+  const on=player.mode==="verse"&&typeof memo!=="undefined"&&memo.surah!=="kursi"&&player.surah===memo.surah&&player.verse===memo.idx+1&&!audio.paused;
+  st.classList.toggle("playing",!!on);
+}
+audio.addEventListener("play",()=>{setPlayIcon();highlightPlayingVerse();updateMemoPlaying();});
 audio.addEventListener("playing",()=>{clearLoadTimer();if(pStatus==="loading"||pStatus==="fallback")setPlayerStatus("ready");setPlayIcon();});
 audio.addEventListener("canplay",()=>{clearLoadTimer();if(pStatus==="loading"||pStatus==="fallback")setPlayerStatus("ready");});
 audio.addEventListener("waiting",()=>{if(player.mode&&pStatus!=="error"&&audio.src)setPlayerStatus("loading","Reprise du chargement…");});
-audio.addEventListener("pause",setPlayIcon);
+audio.addEventListener("pause",()=>{setPlayIcon();updateMemoPlaying();});
 audio.addEventListener("ended",()=>{
   if(player.mode==="verse"){
     if(player.repeatsLeft>0){player.repeatsLeft--;audio.currentTime=0;$("pSub").textContent="Verset "+player.verse+(player.chainTotal?" / "+player.chainTotal:"")+(player.repeatsLeft>0?" · encore "+(player.repeatsLeft+1)+" écoutes":"");attemptPlay();return;}
@@ -1809,7 +1878,7 @@ function syncMediaSession(){
     navigator.mediaSession.metadata=new MediaMetadata({
       title:$("pTitle").textContent||surahMeta(player.surah)[2],
       artist:reciterName(reciter),
-      album:"Tilāwa — Coran · Sourate "+player.surah+" sur 114"
+      album:"Al-Furqan — Coran · Sourate "+player.surah+" sur 114"
     });
     navigator.mediaSession.playbackState=audio.paused?"paused":"playing";
   }catch(e){}
@@ -1837,14 +1906,28 @@ if(msSupported()){
 }
 
 /* ---- Vue Écouter ---- */
-$("reciterSel").addEventListener("change",e=>{reciter=e.target.value;S.reciter=reciter;save();renderListenList();renderDlPanel();if(typeof syncFullPlayer==="function"&&fpOpen)syncFullPlayer();if(player.mode==="surah")playSurah(player.surah);else if(player.mode==="verse"&&player.queue&&player.queue.length)loadQueueItem();toast("Récitateur : "+e.target.selectedOptions[0].text+".");});
+/* Changement de récitateur — un seul point d'entrée, utilisé par les trois
+   sélecteurs (Écouter, lecteur Lire, Mémoriser) : ils restent synchronisés,
+   le choix est conservé, et la lecture en cours repart avec la nouvelle voix.
+   Avant, le sélecteur n'existait que dans l'onglet Écouter : impossible de
+   changer de récitateur depuis le lecteur ou la mémorisation. */
+function setReciter(id){
+  if(!RECITERS.some(r=>r.id===id))return;
+  reciter=id;S.reciter=id;save();
+  ["reciterSel","rdReciter","memoReciter"].forEach(sid=>{const s=$(sid);if(s)s.value=id;});
+  renderListenList();renderDlPanel();
+  if(typeof syncFullPlayer==="function"&&fpOpen)syncFullPlayer();
+  if(player.mode==="surah")playSurah(player.surah);
+  else if(player.mode==="verse"&&player.queue&&player.queue.length)loadQueueItem();
+  toast("Récitateur : "+reciterName(id)+".");
+}
+$("reciterSel").addEventListener("change",e=>setReciter(e.target.value));
 $("verseModeBtn").addEventListener("click",()=>{
   verseMode=!verseMode;$("verseModeBtn").classList.toggle("on",verseMode);
-  $("listenModeNote").innerHTML=verseMode?'<b>Mode verset par verset</b> — touchez le bouton d\'écoute d\'une sourate : les versets s\'enchaînent un à un, idéals pour la mémorisation.':'<b>Écoute continue</b> — la sourate se joue d\'une traite. Activez le <b>mode verset par verset</b> pour suivre le texte et répéter chaque verset.';
   renderListenList();
 });
 function syncRepeatBtn(){$("repeatBtn").classList.toggle("on",repeatThrice);}
-$("repeatBtn").addEventListener("click",()=>{repeatThrice=!repeatThrice;syncRepeatBtn();$("pRepeat").classList.toggle("on",repeatThrice&&player.mode==="verse");toast(repeatThrice?"Répétition ×3 activée pour l'écoute verset par verset.":"Répétition ×3 désactivée.");});
+$("repeatBtn").addEventListener("click",()=>{repeatThrice=!repeatThrice;syncRepeatBtn();$("pRepeat").classList.toggle("on",repeatThrice&&player.mode==="verse");toast(repeatThrice?"Répétition ×3 activée.":"Répétition ×3 désactivée.");});
 function renderListenList(){
   const q=($("listenSearch").value||"").trim().toLowerCase();
   $("listenList").innerHTML=SURAHS.filter(m=>!q||m[2].toLowerCase().includes(q)||m[1].includes(q)||String(m[0])===q).map(m=>{
@@ -1921,7 +2004,7 @@ function renderProgress(){
   const rows=Object.keys(bySurah).map(Number).sort((a,b)=>a-b);
   $("memoProgressList").innerHTML=rows.length?rows.map(n=>{const m=surahMeta(n);const tot=TEXTS[n]?TEXTS[n].length:m[3];
     return '<button class="mini-item" data-mp="'+n+'"><span class="no">'+n+'</span><span><span class="nm">'+m[2]+'</span><br><span class="mt">'+bySurah[n]+" verset"+(bySurah[n]>1?"s":"")+" acquis"+(TEXTS[n]?" sur "+tot:"")+'</span></span><span class="arr">'+ic("chevR","sm")+"</span></button>";}).join("")
-    :'<div class="empty"><span class="serif">Rien encore — et c\'est le meilleur moment pour commencer</span>Validez vos premiers versets dans l\'onglet Mémoriser, ils apparaîtront ici.</div>';
+    :'<div class="empty"><span class="serif">Rien encore</span>Validez vos premiers versets dans l\'onglet Mémoriser.</div>';
   $("memoProgressList").querySelectorAll("[data-mp]").forEach(b=>b.addEventListener("click",()=>startMemo(+b.dataset.mp,1)));
 }
 $("addSessionBtn").addEventListener("click",()=>{logActivity(15);S.sessions=(S.sessions||0)+1;save();renderProgress();toast("Session du jour consignée : +15 minutes.");});
@@ -1965,7 +2048,7 @@ function renderKhatma(){
     +'<div class="ring-wrap"><svg class="plan-ring" viewBox="0 0 84 84" aria-hidden="true"><circle class="ring-bg" cx="42" cy="42" r="36"></circle><circle class="ring-fg" cx="42" cy="42" r="36" stroke-dasharray="'+CIRC+'" stroke-dashoffset="'+(CIRC*(1-pct/100)).toFixed(1)+'"></circle></svg>'
     +'<div class="ring-txt"><b>'+pct+' %</b><span>Page '+read+" / 604</span></div></div>"
     +'<div style="flex:1;min-width:210px"><h3 class="serif" style="font-size:23px;font-weight:600;margin:0 0 4px">Ma khatma — plan de lecture</h3>'
-    +'<p style="margin:0;color:var(--ink2);font-size:13.5px">Objectif : terminer le Coran en <b>'+plan.days+' jours</b> · commencée le '+startD.toLocaleDateString("fr-FR",{day:"numeric",month:"long"})+' · '+doneCount+" portion"+(doneCount>1?"s":"")+" lue"+(doneCount>1?"s":"")+" sur "+portions.length+". Aujourd'hui : jour "+(elapsed+1)+". Cochez chaque portion lorsque vous l'avez lue.</p>"
+    +'<p style="margin:0;color:var(--ink2);font-size:13.5px">Objectif : terminer le Coran en <b>'+plan.days+' jours</b> · commencée le '+startD.toLocaleDateString("fr-FR",{day:"numeric",month:"long"})+' · '+doneCount+" portion"+(doneCount>1?"s":"")+" lue"+(doneCount>1?"s":"")+" sur "+portions.length+". Aujourd'hui : jour "+(elapsed+1)+".</p>"
     +'<div class="plan-bar"><i style="width:'+pct+'%"></i></div>'
     +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center"><span style="font-size:13px;font-weight:800;color:var(--ink)">Page '+read+" / 604</span>"
     +'<button class="btn sm ghost" id="khatmaReset" style="margin-left:auto">Nouveau plan</button></div></div></div>'
@@ -1987,7 +2070,7 @@ function renderKhatma(){
   box.querySelectorAll("[data-kcheck]").forEach(b=>b.addEventListener("click",()=>{
     const i=+b.dataset.kcheck;
     if(S.khatma.done[i]){delete S.khatma.done[i];toast("Portion du jour "+(i+1)+" décochée.");}
-    else{S.khatma.done[i]=true;logActivity(2);toast("Portion du jour "+(i+1)+" lue — page "+S.khatma.portions[i].to+" / 604. Belle lecture, continuez ainsi.");}
+    else{S.khatma.done[i]=true;logActivity(2);toast("Portion du jour "+(i+1)+" lue — page "+S.khatma.portions[i].to+" / 604.");}
     save();renderKhatma();
   }));
   box.querySelectorAll("[data-kread]").forEach(b=>b.addEventListener("click",()=>{
@@ -1997,7 +2080,7 @@ function renderKhatma(){
   }));
   const rs=$("khatmaReset");
   if(rs)rs.addEventListener("click",()=>{
-    if(rs.dataset.confirm){S.khatma=null;save();khatmaSel={mode:"days",days:30,perDay:20};renderKhatma();toast("Plan de lecture effacé — composez-en un nouveau quand vous voulez.");}
+    if(rs.dataset.confirm){S.khatma=null;save();khatmaSel={mode:"days",days:30,perDay:20};renderKhatma();toast("Plan de lecture effacé.");}
     else{rs.dataset.confirm="1";rs.textContent="Confirmer — effacer la khatma actuelle ?";rs.classList.remove("ghost");rs.classList.add("gold");}
   });
 }
@@ -2006,7 +2089,6 @@ function renderKhatmaSetup(box){
   const firstLen=khatmaPortions(days)[0].to-khatmaPortions(days)[0].from+1;
   let h='<div class="plan-card">'
   +'<h3 class="serif" style="font-size:23px;font-weight:600;margin:0 0 4px">Plan de lecture — khatma</h3>'
-  +'<p style="margin:0;color:var(--ink2);font-size:13.5px;max-width:64ch">Le pendant lecture du plan de mémorisation : choisissez en combien de jours vous voulez terminer le Coran. L\'application découpe les 604 pages du mushaf de Médine en portions quotidiennes — cochez chaque portion lue et regardez l\'anneau se remplir, page après page.</p>'
   +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;align-items:center"><span class="plan-lbl">Durée</span>'
   +[7,15,30,60].map(d=>'<button class="chipbtn'+(khatmaSel.mode==="days"&&khatmaSel.days===d?" on":"")+'" data-kdays="'+d+'">'+d+' jours</button>').join("")
   +'<button class="chipbtn'+(khatmaSel.mode==="free"?" on":"")+'" data-kfree="1">Libre</button></div>';
@@ -2026,7 +2108,7 @@ function renderKhatmaSetup(box){
   $("khatmaCreate").addEventListener("click",()=>{
     S.khatma={days:days,start:todayStr(),portions:khatmaPortions(days),done:{},created:Date.now()};
     save();logActivity(1);renderKhatma();
-    toast("Khatma commencée — "+days+" jours pour lire les 604 pages. Bismillah, bonne lecture !");
+    toast("Khatma commencée — "+days+" jours pour les 604 pages.");
     const el=$("khatmaBox");if(el)el.scrollIntoView({block:"start"});
   });
 }
@@ -2045,13 +2127,13 @@ function backupFilename(){
 function exportData(){
   const data={};
   try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k!=null)data[k]=localStorage.getItem(k);}}catch(e){}
-  const payload={app:"Tilāwa — Coran : Lire, Mémoriser, Écouter",format:"tilawa-sauvegarde",version:1,exportedAt:new Date().toISOString(),data:data};
+  const payload={app:"Al-Furqan — Coran : Lire, Mémoriser, Écouter",format:"tilawa-sauvegarde",version:1,exportedAt:new Date().toISOString(),data:data};
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
   const url=URL.createObjectURL(blob);
   const a=document.createElement("a");a.href=url;a.download=backupFilename();
   document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),4000);
-  toast("Sauvegarde téléchargée : "+backupFilename()+" — conservez ce fichier en lieu sûr.");
+  toast("Sauvegarde téléchargée : "+backupFilename());
 }
 let pendingImport=null;
 function importDataFile(file){
@@ -2062,7 +2144,7 @@ function importDataFile(file){
     const box=$("importConfirm");if(!box)return;
     if(!parsed||typeof parsed!=="object"||!parsed.data||typeof parsed.data!=="object"||Array.isArray(parsed.data)||!Object.keys(parsed.data).length){
       pendingImport=null;
-      box.innerHTML='<div class="notice" style="margin-top:14px"><b>Fichier non reconnu.</b> Ce fichier ne ressemble pas à une sauvegarde Tilāwa : rien n\'a été modifié.</div>';
+      box.innerHTML='<div class="notice" style="margin-top:14px"><b>Fichier non reconnu.</b> Ce fichier ne ressemble pas à une sauvegarde Al-Furqan : rien n\'a été modifié.</div>';
       return;
     }
     pendingImport=parsed.data;
@@ -2091,7 +2173,7 @@ $("importFile").addEventListener("change",e=>{const f=e.target.files&&e.target.f
 function renderReview(){
   const entries=Object.entries(S.difficult).map(([k,v])=>{const [s,vv]=k.split(":").map(Number);return{s,v:vv,...v};}).sort((a,b)=>(b.when||0)-(a.when||0));
   if(!entries.length){
-    $("reviewList").innerHTML='<div class="empty"><span class="serif">Votre liste est vide — al-hamdoulillah</span>Aucun verset marqué difficile pour le moment. Pendant la mémorisation, touchez « Difficile — à revoir » et le verset viendra s\'inscrire ici.</div>';
+    $("reviewList").innerHTML='<div class="empty"><span class="serif">Votre liste est vide</span>Aucun verset marqué difficile pour le moment.</div>';
     return;
   }
   $("reviewList").innerHTML=entries.map(e=>{const m=surahMeta(e.s);
@@ -2115,7 +2197,7 @@ function rvHandler(e){
   if(b.dataset.rv==="open")openSurah(s,v);
   if(b.dataset.rv==="memo"){if(s===2&&v===255)startMemo("kursi",1);else startMemo(s,v);}
   if(b.dataset.rv==="sim"&&entry)toggleSimilar(s,v,entry);
-  if(b.dataset.rv==="done"){delete S.difficult[k];S.memorized[k]=true;save();buildNav();renderReview();toast("Verset acquis et retiré de la révision. Très beau travail.");}
+  if(b.dataset.rv==="done"){delete S.difficult[k];S.memorized[k]=true;save();buildNav();renderReview();toast("Verset acquis et retiré de la révision.");}
 }
 
 /* ================= FAVORIS (épinglés, persistants en localStorage) ================= */
@@ -2139,7 +2221,7 @@ function favoritesList(){
 function renderFavorites(){
   const list=favoritesList();
   if(!list.length){
-    $("favList").innerHTML='<div class="empty"><span class="serif">Aucun verset épinglé pour le moment</span>Dans le lecteur, touchez le cœur sous un verset pour l\'épingler ici — vous pourrez le relire et le réécouter quand vous voulez.</div>';
+    $("favList").innerHTML='<div class="empty"><span class="serif">Aucun verset épinglé</span>Touchez le cœur sous un verset, dans le lecteur, pour l\'épingler ici.</div>';
     return;
   }
   let h='<div class="fav-head"><span class="cnt-line">'+list.length+" verset"+(list.length>1?"s":"")+" favori"+(list.length>1?"s":"")+'</span><button class="btn sm gold" id="favPlayAll">'+ic("play","sm")+' Tout écouter à la suite</button></div>';
@@ -2421,13 +2503,13 @@ function renderDlPanel(){
   }
   const entries=Object.entries(S.downloads||{});
   if(!entries.length){
-    box.innerHTML='<p style="color:var(--ink2);font-size:13.5px;margin:6px 0 2px">Aucune sourate téléchargée pour le moment. Choisissez un récitateur, puis touchez le bouton de téléchargement d\'une sourate dans la liste ci-dessous.</p>';
+    box.innerHTML='<p style="color:var(--ink2);font-size:13.5px;margin:6px 0 2px">Aucune sourate téléchargée pour le moment.</p>';
     $("dlTotal").textContent="";return;
   }
   let total=0;
   box.innerHTML=entries.map(([k,d])=>{
     const parts=k.split("|");const r=parts[0],nn=+parts[1];total+=d.size||0;const m=surahMeta(nn);
-    return '<div class="dl-item"><span class="avatar-sm">'+reciterInitials(reciterName(r))+'</span><span style="min-width:0"><span class="nm">'+m[2]+'</span><br><span class="mt">'+escapeHtml(reciterName(r))+" · "+fmtSize(d.size)+" · le "+new Date(d.when).toLocaleDateString("fr-FR")+'</span></span><button class="iconbtn" style="margin-left:auto;flex:none" data-dldel2="'+k+'" aria-label="Supprimer ce téléchargement">'+ic("x","sm")+"</button></div>";
+    return '<div class="dl-item"><span class="avatar-sm">'+reciterInitials(reciterName(r))+reciterImgHtml(reciterById(r))+'</span><span style="min-width:0"><span class="nm">'+m[2]+'</span><br><span class="mt">'+escapeHtml(reciterName(r))+" · "+fmtSize(d.size)+" · le "+new Date(d.when).toLocaleDateString("fr-FR")+'</span></span><button class="iconbtn" style="margin-left:auto;flex:none" data-dldel2="'+k+'" aria-label="Supprimer ce téléchargement">'+ic("x","sm")+"</button></div>";
   }).join("");
   $("dlTotal").textContent="Total conservé sur cet appareil : "+fmtSize(total)+" · "+entries.length+" sourate"+(entries.length>1?"s":"")+".";
   box.querySelectorAll("[data-dldel2]").forEach(b=>b.addEventListener("click",()=>{const parts=b.dataset.dldel2.split("|");dlDelete(parts[0],+parts[1]);}));
@@ -2460,15 +2542,12 @@ function syncFpTimes(){
 function syncFullPlayer(){
   if(!player.mode)return;
   const ro=reciterObj();const m=player.surah?surahMeta(player.surah):null;
-  $("fpAvatar").textContent=reciterInitials(ro.name);
+  $("fpAvatar").innerHTML=reciterInitials(ro.name)+reciterImgHtml(ro);
   $("fpFrName").textContent=m?m[2]:"—";
   $("fpArName").textContent=m?m[1]:"—";
   $("fpRecName").textContent=ro.name+(player.mode==="verse"&&player.verse?" · verset "+player.verse+" de la sourate":"");
   $("fpPlayIcon").innerHTML=audio.paused?ICONS.play:ICONS.pause;
   $("fpRepeat").classList.toggle("on",(player.mode==="surah"&&!!player.loop)||(player.mode==="verse"&&repeatThrice));
-  $("fpModeNote").textContent=player.mode==="verse"
-    ?"Écoute verset par verset : reculer et avancer de 10 secondes agit dans le fichier du verset en cours."
-    :"Lecture de la sourate entière. Touchez « Hors ligne » pour la télécharger et l'écouter sans connexion.";
   syncFpDl();syncFpTimes();
 }
 function openFullPlayer(){
@@ -2586,8 +2665,8 @@ function fcRender(){
   const counts=[0,0,0,0,0,0];
   Object.values(S.flashcards).forEach(c=>{if(c&&c.box>=1&&c.box<=6)counts[c.box-1]++;});
   let h='<div class="fc-boxes">'+counts.map((c,i)=>'<div class="fc-box"><div class="bn">Boîte '+(i+1)+'</div><div class="bc">'+c+'</div><div class="bn">'+(c===1?"carte":"cartes")+"</div></div>").join("")+"</div>";
-  if(!total)h+='<div class="empty"><span class="serif">Aucune carte pour le moment</span>Marquez un verset « Difficile — à revoir » pendant la mémorisation ou dans le lecteur : il deviendra aussitôt une carte de la boîte 1.</div>';
-  else if(!due.length)h+='<div class="empty"><span class="serif">Rien à revoir aujourd\'hui — beau travail</span>Vos '+total+' cartes sont programmées pour plus tard. La répétition espacée fait son œuvre : revenez demain.</div>';
+  if(!total)h+='<div class="empty"><span class="serif">Aucune carte pour le moment</span>Marquez un verset « Difficile » pour créer sa carte.</div>';
+  else if(!due.length)h+='<div class="empty"><span class="serif">Rien à revoir aujourd\'hui</span>Vos '+total+' cartes sont programmées pour plus tard.</div>';
   else h+='<div style="text-align:center"><p style="font-size:15px;margin:4px 0 12px"><b>'+due.length+" carte"+(due.length>1?"s":"")+" due"+(due.length>1?"s":"")+' aujourd\'hui</b> — on commence par la boîte 1, comme le veut Leitner.</p><button class="btn gold" id="fcStart">Commencer les cartes du jour</button></div>';
   box.innerHTML=h;
   const st=$("fcStart");
@@ -2672,7 +2751,7 @@ function checkPuzzleAuto(){
   const msg=$("pzMsg");if(!msg)return;
   const good=pz.placed.every((wi,i)=>wi===i);
   if(good){
-    msg.innerHTML='<div class="pz-ok"><b>Verset reconstruit — parfait.</b> L\'ordre des mots est exactement celui du mushaf. Récitez-le une fois à voix haute pour l\'ancrer.<div style="margin-top:10px"><button class="btn sm gold" id="pzNext">Verset suivant</button></div></div>';
+    msg.innerHTML='<div class="pz-ok"><b>Verset reconstruit — parfait.</b><div style="margin-top:10px"><button class="btn sm gold" id="pzNext">Verset suivant</button></div></div>';
     logActivity(2);
     const nx=$("pzNext");
     if(nx)nx.addEventListener("click",()=>{const nv=pz.v<surahMeta(pz.s)[3]?pz.v+1:1;startPuzzle(pz.s,nv);});
@@ -2695,7 +2774,7 @@ function renderRecite(){
     +'<p style="font-family:\'Plus Jakarta Sans\',sans-serif;font-style:italic;color:var(--ink2);font-size:16.5px;margin:2px 0 0">'+escapeHtml(obj.fr||"")+"</p>"
     +(SR
       ?'<button class="rc-mic" id="rcMic" aria-label="Commencer ou arrêter la récitation">'+ic("mic")+'</button><div id="rcStatus" style="text-align:center;font-size:13px;font-weight:700;color:var(--ink2)">Touchez le micro, récitez le verset à voix haute, puis touchez à nouveau pour arrêter.</div>'
-      :'<div class="notice" style="margin-top:12px"><b>Reconnaissance vocale non disponible dans ce navigateur.</b> Elle est intégrée surtout à Chrome. Vous pouvez toujours écouter le modèle ci-dessous et réciter après lui, comme en séance libre.</div>')
+      :'<div class="notice" style="margin-top:12px"><b>Reconnaissance vocale non disponible dans ce navigateur.</b> Elle fonctionne surtout dans Chrome.</div>')
     +'<div id="rcResult" style="margin-top:14px"></div>'
     +'<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:14px"><button class="btn sm ghost" id="rcModel">Écouter le modèle</button><button class="btn sm ghost" id="rcPrevV">Verset précédent</button><button class="btn sm ghost" id="rcNextV">Verset suivant</button><button class="btn sm ghost" id="rcFromMemo">Verset en cours de mémorisation</button></div>';
   const mic=$("rcMic");if(mic)mic.addEventListener("click",toggleRecite);
@@ -2813,6 +2892,17 @@ function dismissGuide(){if(!S.seenGuide){S.seenGuide=true;save();}hideGuide();}
     sel.innerHTML=RECITERS.map(r=>'<option value="'+r.id+'">'+r.name+"</option>").join("");
     if(S.reciter&&RECITERS.some(r=>r.id===S.reciter))reciter=S.reciter;
     sel.value=reciter;
+  }
+  const msel=$("memoReciter");
+  if(msel){
+    msel.innerHTML=RECITERS.map(r=>'<option value="'+r.id+'">'+r.name+"</option>").join("");
+    msel.value=reciter;
+    msel.addEventListener("change",()=>setReciter(msel.value));
+  }
+  const mf=$("memoFollow");
+  if(mf){
+    mf.classList.toggle("on",followSync);mf.setAttribute("aria-pressed",String(followSync));
+    mf.addEventListener("click",()=>{setFollow(!followSync);toast(followSync?"Suivi synchronisé activé — en Mémo comme en lecture, le texte avance au rythme du récitateur.":"Suivi synchronisé coupé — le texte n'avancera plus tout seul.");});
   }
   if($("ccContinue"))$("ccContinue").addEventListener("click",()=>openSurah((S.lastRead||{}).surah||1,(S.lastRead||{}).verse||1));
   if($("ccListen"))$("ccListen").addEventListener("click",()=>playSurah((S.lastRead||{}).surah||1));

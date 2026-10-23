@@ -1,6 +1,6 @@
-/* Tilāwa — service worker : app shell en cache-first (ouverture hors ligne),
+/* Al-Furqan — service worker : app shell en cache-first (ouverture hors ligne),
    reste en réseau-d'abord avec repli sur le cache. */
-const VERSION = "tilawa-v1";
+const VERSION = "alfurqan-v2";
 const CACHE_COEUR = VERSION + "-coeur";
 const CACHE_FLUX = VERSION + "-flux";
 
@@ -15,7 +15,28 @@ const APP_SHELL = [
   "assets/icon-512.png",
   "assets/icon-maskable-192.png",
   "assets/icon-maskable-512.png",
-  "assets/apple-touch-icon.png"
+  "assets/apple-touch-icon.png",
+  "assets/reciters/alafasy.jpg",
+  "assets/reciters/husary.jpg",
+  "assets/reciters/minshawi.jpg",
+  "assets/reciters/abdulbasit.jpg",
+  "assets/reciters/sudais.jpg",
+  "assets/reciters/shuraim.jpg",
+  "assets/reciters/maher.jpg",
+  "assets/reciters/hudhaify.jpg",
+  "assets/reciters/ajamy.jpg",
+  "assets/reciters/shaatree.jpg",
+  "assets/reciters/jibreel.jpg",
+  "assets/reciters/rifai.jpg",
+  "assets/reciters/dossari.jpg",
+  "assets/reciters/ghamdi.jpg",
+  "assets/reciters/ayyoub.jpg",
+  "assets/reciters/basfar.jpg",
+  "assets/reciters/sowaid.jpg",
+  "assets/reciters/matroud.jpg",
+  "assets/reciters/tablawi.jpg",
+  "assets/reciters/azizalili.jpg",
+  "assets/reciters/akhdar.jpg"
 ];
 
 self.addEventListener("install", (e) => {
@@ -30,7 +51,7 @@ self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys()
       .then((cles) => Promise.all(
-        cles.filter((c) => c.indexOf(VERSION) !== 0)
+        cles.filter((c) => c.indexOf(VERSION) !== 0 && c.indexOf("tilawa-audio") !== 0)
             .map((c) => caches.delete(c))
       ))
       .then(() => self.clients.claim())
